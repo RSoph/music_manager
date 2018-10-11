@@ -34,6 +34,7 @@ class Album
             if album.title == title
                 album.status = "(played)"
                 puts "You're listening to #{album.title}"
+                return
             end
         end
         puts "I couldn't find that album in your collection!"

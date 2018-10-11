@@ -43,7 +43,7 @@ class Collection
                 end
             end
         else
-            return "I didn't understand that command."
+            puts "I didn't understand that command."
         end
     end
 end
