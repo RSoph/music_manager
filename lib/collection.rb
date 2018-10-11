@@ -13,7 +13,7 @@ class Collection
             if artist
                 # show all of the albums by that artist
                 albums.each do |album|
-                    if album.artist == artist
+                    if album.artist.downcase == artist.downcase
                         puts "\"#{album.title}\" by #{album.artist} #{album.status}"
                     end
                 end
@@ -28,7 +28,7 @@ class Collection
             if artist
                 # show only by that artist and status
                 albums.each do |album|
-                    if album.artist == artist and status == album.status
+                    if album.artist.downcase == artist.downcase and status == album.status
                         puts "\"#{album.title}\" by #{album.artist}"
                     end
                 end
@@ -53,7 +53,7 @@ class Collection
         # That is why this method is on collection rather than album.
         playing_album = nil
         albums.each do |album|
-            if album.title == title
+            if album.title.downcase == title.downcase
                 album.status = "(played)"
                 playing_album = album
             end

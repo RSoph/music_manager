@@ -10,7 +10,7 @@ class Album
 
     def add(collection)
         collection.albums.each do |album|
-            if album.title == title
+            if album.title.downcase == title.downcase
                 puts "You've already got an album with that title, would you like to overwrite the old one? (type 'yes' to overwrite)"
             	response = gets
             	if response.downcase.strip == 'yes'
