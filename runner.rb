@@ -1,8 +1,8 @@
 require 'pry'
 
 
-require_relative 'album'
-require_relative 'collection'
+require_relative 'lib/album'
+require_relative 'lib/collection'
 
 collection = Collection.new()
 
@@ -15,14 +15,25 @@ while running
         parsed = command.split('"')
         title = parsed[1]
         artist = parsed[3]
-        if parsed.length != 4
-            return "That wasn't formatted the way I expected. Please enter: 'add \"album title\" \"artist\"'"
+        if parsed.length != 5
+            puts "That wasn't formatted the way I expected. Please enter: 'add \"album title\" \"artist\"'"
         else
-            Album.add(title, artist, collection)
+            album = Album.new(title, artist)
+            album.add(collection)
         end
     when "play"
         title = command.split('"')[1]
-        Album.play(title, collection)
+        playing_album = nil
+        collection.albums.each do |album|
+            if album.title == title
+                playing_album = album
+            end
+        end
+        if playing_album
+            playing_album.play(collection)
+        else
+            puts "I couldn't find that album in your collection!"
+        end
     when "show"
         argument = command.split('"')[0].split(" ")[1]
         artist = command.split('"')[1]

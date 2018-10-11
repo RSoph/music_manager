@@ -65,6 +65,16 @@ Bye!
 
  As shown above, the program should accept the following commands:
 
- add "$title" "$artist": adds an album to the collection with the given title and artist. All albums are unplayed by default. play "$title": marks a given album as played. show all: displays all of the albums in the collection show unplayed: display all of the albums that are unplayed show all by "$artist": shows all of the albums in the collection by the given artist show unplayed by "$artist": shows the unplayed albums in the collection by the given artist quit: quits the program Some other stipulations:
+ add "$title" "$artist": adds an album to the collection with the given title and artist. 
+ All albums are unplayed by default. 
+ play "$title": marks a given album as played. 
+ show all: displays all of the albums in the collection show unplayed: display all of the albums that are unplayed show all by "$artist": shows all of the albums in the collection by the given artist show unplayed by "$artist": shows the unplayed albums in the collection by the given artist quit: quits the program Some other stipulations:
 
  You can use whatever language you want, but don't use a framework for this. Assume that there can never be two albums with the same title in the system (even if they were to have different artists). The user shouldn't be allowed to add two albums with the same title. Do not use a persistence mechanism (ie, a SQL database) for the albums. Store them in memory. That is, every time you run the program, the list of albums should be empty. Using a database can make some aspects of this a little too easy :) This homework usually takes one or two evenings to complete. The code should be written as would be in production (error checking, tests, etc) Please submit your solution to us via github repository link
+
+
+
+
+ TODO
+
+ add and play should not be class methods. Make the runner identify the album in question and then do album.add(collection)

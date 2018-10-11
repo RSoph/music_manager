@@ -10,7 +10,7 @@ class Album
         @status = "(unplayed)"
     end
 
-    def self.add(title, artist, collection)
+    def add(collection)
         # add "Pauls Boutique" "Beastie Boys"
         collection.albums.each do |album|
             if album.title == title
@@ -23,20 +23,27 @@ class Album
                 end
             end
         end
-        album = Album.new(title, artist)
-        collection.albums << album
-        puts "Added \"#{album.title}\" by #{album.artist}"
+        # Note, this does not push the album itself
+        # to the collection, but a copy of the album.
+        collection.albums << self
+        puts "Added \"#{title}\" by #{artist}"
     end
 
-    def self.play(title, collection)
+    def play(collection)
         # play "Licensed to Ill"
+        # What is in the collection is not the album itself,
+        # but a copy of the album, so we have to locate
+        # that copy within collection.albums and change
+        # the status there.
+        playing_album = nil
         collection.albums.each do |album|
             if album.title == title
                 album.status = "(played)"
-                puts "You're listening to #{album.title}"
-                return
+                playing_album = album
             end
         end
-        puts "I couldn't find that album in your collection!"
+        if playing_album
+            puts "You're listening to #{title}"
+        end
     end
 end
