@@ -1,6 +1,3 @@
-require 'pry'
-
-
 require_relative 'lib/album'
 require_relative 'lib/collection'
 

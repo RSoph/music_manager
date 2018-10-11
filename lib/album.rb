@@ -1,5 +1,3 @@
-require 'pry'
-
 class Album
 
     attr_accessor :title, :artist, :status

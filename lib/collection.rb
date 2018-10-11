@@ -1,5 +1,3 @@
-require 'pry'
-
 class Collection
 
 	attr_accessor :albums

@@ -1,5 +1,3 @@
-require 'pry'
-
 require 'rspec'
 require 'album'
 require 'collection'
