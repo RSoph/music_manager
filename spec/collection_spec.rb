@@ -35,7 +35,7 @@ RSpec.describe Collection do
         collection = Collection.new()
         album = Album.new("a title", "an artist")
         album.add(collection)
-        album.play(collection)
+        collection.play("a title")
         album = Album.new("another title", "another artist")
         album.add(collection)
         expect{ collection.show("played") }.to output("\"a title\" by an artist\n").to_stdout
@@ -46,11 +46,28 @@ RSpec.describe Collection do
         collection = Collection.new()
         album = Album.new("a title", "an artist")
         album.add(collection)
-        album.play(collection)
+        collection.play("a title")
         album = Album.new("another title", "an artist")
         album.add(collection)
         expect{ collection.show("played", "an artist") }.to output("\"a title\" by an artist\n").to_stdout
         expect{ collection.show("unplayed", "an artist") }.to output("\"another title\" by an artist\n").to_stdout
+    end
+
+    it "can play an album on a collection" do
+        collection = Collection.new()
+        album = Album.new("a title", "an artist")
+        expect{ album.add(collection) }.to output("Added \"a title\" by an artist\n").to_stdout
+        collection.play("a title")
+        expect(collection.albums[0].status).to eq "(played)"
+    end
+
+    it "will fail gracefully if you try the wrong title" do
+        collection = Collection.new()
+        album = Album.new("a title", "an artist")
+        album.add(collection)
+        album = Album.new("another title", "another artist")
+        expect{ collection.play("another title") }.to output("I couldn't find that album in your collection!\n").to_stdout
+        expect(collection.albums[0].status).to eq "(unplayed)"
     end
 
     it "can deal with invalid commands" do

@@ -24,16 +24,7 @@ while running
     when "play"
         title = command.split('"')[1]
         playing_album = nil
-        collection.albums.each do |album|
-            if album.title == title
-                playing_album = album
-            end
-        end
-        if playing_album
-            playing_album.play(collection)
-        else
-            puts "I couldn't find that album in your collection!"
-        end
+        collection.play(title)
     when "show"
         argument = command.split('"')[0].split(" ")[1]
         artist = command.split('"')[1]
