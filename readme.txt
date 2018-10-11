@@ -1,80 +1,11 @@
-# I want you to write a small system for managing your music collection. The system should be accessible from the command line. I would interact with it like so:
-add "Ride the Lightning" "Metallica"
-add "Licensed to Ill" "Beastie Boys"
-add "Pauls Boutique" "Beastie Boys"
-add "The Dark Side of the Moon" "Pink Floyd"
+This is a program for managing a music collection. It's written in pure Ruby, with no framework, no third party gems (except for Rspec), and no database. When run, it keeps your music collection in memory, and then deletes it when finished - this obviously makes it completely impractical to actually use, but it made for an interesting exercise.
 
+To run, clone the repo locally, move to the directory, and type `ruby runner.rb`. To run the test suite, run `gem install rspec` and then `rspec`.
 
-./music
+There are two major classes, Album and Collection. A collection only has one attribute; a list of albums. In 'real life' this would probably be a one-to-many database association. Were this to be built out further, I imagine that a Collection could also be associated with a user who created and owns it, it could have a date created, a user-provided name, etc.
 
-Welcome to your music collection!
+An album has the attributes you'd expect, title and artist, as well as a status. In a perfect world, I would enforce that the status only has two valid options, but since I'm not allowing user choice on this field, it didn't seem necessary.
 
-Added "Ride the Lightning" by Metallica
+When an album is created, it does not need to belong to a collection. When it's added to a collection's list, the album itself isn't pushed to that list, but a copy of the album. This means that if you change an album's status to "(played)" outside of a collection, then the collection's copy will remain "(unplayed)". If this were built out, we'd have to decide if: 1) CollectionAlbums would be an association, instead of a list of copied objects, and this wouldn't be an issue at all. Or if 2) maybe if there were multiple users, we'd want to make album copies for each collection, so that each could have a status, added date, etc. independently from each other. At this tiny scale, I'm not ready to commit to one or the other.
 
-> add "Licensed to Ill" "Beastie Boys"
-
-Added "Licensed to Ill" by Beastie Boys   
-> add "Pauls Boutique" "Beastie Boys"
-
-Added "Pauls Boutique" by Beastie Boys
-
-> add "The Dark Side of the Moon" "Pink Floyd"
-
-Added "The Dark Side of the Moon" by Pink Floyd
-
-> show all
-
-"Ride the Lightning" by Metallica (unplayed)
-"Licensed to Ill" by Beastie Boys (unplayed)
-"Pauls Boutique" by Beastie Boys (unplayed)
-"The Dark Side of the Moon" by Pink Floyd (unplayed)
-
-> play "Licensed to Ill"
-
-You're listening to "Licensed to Ill"
-
-> play "The Dark Side of the Moon"
-
-You're listening to "The Dark Side of the Moon"
-
-> show all
-
-"Ride the Lightning" by Metallica (unplayed)
-"Licensed to Ill" by Beastie Boys (played)
-"Pauls Boutique" by Beastie Boys (unplayed)
-"The Dark Side of the Moon" by Pink Floyd (played)
-
-> show unplayed
-
-"Ride the Lightning" by Metallica
-"Pauls Boutique" by Beastie Boys
-
-> show all by "Beastie Boys"
-
-"Licensed to Ill" by Beastie Boys (played)
-"Pauls Boutique" by Beastie Boys (unplayed)
-
-> show unplayed by "Beastie Boys"
-
-"Pauls Boutique" by Beastie Boys
-
-> quit
-
-Bye!
-
-
- As shown above, the program should accept the following commands:
-
- add "$title" "$artist": adds an album to the collection with the given title and artist. 
- All albums are unplayed by default. 
- play "$title": marks a given album as played. 
- show all: displays all of the albums in the collection show unplayed: display all of the albums that are unplayed show all by "$artist": shows all of the albums in the collection by the given artist show unplayed by "$artist": shows the unplayed albums in the collection by the given artist quit: quits the program Some other stipulations:
-
- You can use whatever language you want, but don't use a framework for this. Assume that there can never be two albums with the same title in the system (even if they were to have different artists). The user shouldn't be allowed to add two albums with the same title. Do not use a persistence mechanism (ie, a SQL database) for the albums. Store them in memory. That is, every time you run the program, the list of albums should be empty. Using a database can make some aspects of this a little too easy :) This homework usually takes one or two evenings to complete. The code should be written as would be in production (error checking, tests, etc) Please submit your solution to us via github repository link
-
-
-
-
- TODO
-
- add and play should not be class methods. Make the runner identify the album in question and then do album.add(collection)
+The runner file is just a script to manage user input, and trigger model actions. I'm thinking of it as if it were the controller in an MVC context, and that's how I've separated its concerns from the model's. I've added just a little data validation here and there, so the user shouldn't be able to 'break' it.
